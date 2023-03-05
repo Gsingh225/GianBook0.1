@@ -1,7 +1,8 @@
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, session, request, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.secret_key = 'mysecretkey'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
 db = SQLAlchemy(app)
 
@@ -40,6 +41,8 @@ def login():
         password = request.form['pas']
         user = User.query.filter_by(username=username, password=password).first()
         if user is not None:
+            session['username'] = username
+            session['password'] = password
             return redirect(url_for('account'))
         else:
             return render_template('login.html', err='Invalid Username or Password')
@@ -47,7 +50,9 @@ def login():
 
 @app.route('/account')
 def account():
-    return 'LOGIN WAS A SUCCESS'
+    username = session.get('username')
+    password = session.get('password')
+    return f'LOGIN WAS A SUCCESS, Welcome {username}. Your password is {password}!'
 
 
 if __name__ == '__main__':
