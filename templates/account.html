@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
     <title>GianBook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         #topbar{
             display: flex;
@@ -24,12 +25,48 @@
             padding: 10px;
             margin: 10px;
         }
+        #overlay{
+            text-align: center;
+            border: solid 5px black;
+            margin: 50px;
+            border-radius: 25px;
+        }
+        .but{
+            border: none;
+            padding: 10px;
+            width: 100px;
+            height: 50px;
+            border-radius: 25px;
+        }
+        #title{
+            border-radius: 10px;
+            padding: 5px;
+        }
+        #body-text{
+            border-radius: 10px;
+            padding: 5px;
+            height: auto;
+        }
     </style>
 </head>
 <body>
     <div id="topbar">
         <div id="center" class="kid">
             <h1>GianBook</h1>
+        </div>
+    </div>
+    <div id="overlay">
+        <div id="popuo-form">
+            <h3>Post To GianBook</h3>
+            <button class="but" id="close-btn" onclick="close()">Close</button>
+            <br><br>
+            <form method="post">
+                <input id="title" name="title" type="text" placeholder="Title">
+                <br><br>
+                <textarea rows="10" id="body-text" name="body-text" type="text" placeholder="body"></textarea>
+                <br><br>
+                <button type="submit" class="but">Post</button>
+            </form>
         </div>
     </div>
 </body>
