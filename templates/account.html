@@ -30,6 +30,7 @@
             border: solid 5px black;
             margin: 50px;
             border-radius: 25px;
+            display: none;
         }
         .but{
             border: none;
@@ -47,6 +48,9 @@
             padding: 5px;
             height: auto;
         }
+        body{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -58,7 +62,7 @@
     <div id="overlay">
         <div id="popuo-form">
             <h3>Post To GianBook</h3>
-            <button class="but" id="close-btn" onclick="close()">Close</button>
+            <button class="but" id="close-btn" onclick="closed()">Close</button>
             <br><br>
             <form method="post">
                 <input id="title" name="title" type="text" placeholder="Title">
@@ -68,5 +72,20 @@
                 <button type="submit" class="but">Post</button>
             </form>
         </div>
+        <h1 id="test"></h1>
     </div>
+    <button class="but" id="postbut" onclick="yespost()">Post to GianBook</button>
 </body>
+<script>
+    var overlay = document.getElementById('overlay');
+    var postbut = document.getElementById('postbut');
+    var test = document.getElementById('test')
+     function yespost() {
+        overlay.style.display = "block";
+        postbut.style.visibility = "hidden";
+    }
+    function closed() {
+        overlay.style.display = "none";
+        postbut.style.visibility = "visible";
+    }
+</script>
