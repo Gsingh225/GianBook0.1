@@ -1,5 +1,6 @@
 from flask import Flask, session, request, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
+import random
 
 app = Flask(__name__)
 app.secret_key = 'mysecretkey'
@@ -13,12 +14,41 @@ class User(db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title  = db.Column(db.String(40), unique=True, nullable=False)
-    text = db.Column(db.String(400), unique=True, nullable=False)
+    title  = db.Column(db.String(40), nullable=False)
+    text = db.Column(db.String(400), nullable=False)
+    user = db.Column(db.String(40), nullable=False)
 
 with app.app_context():
     db.drop_all()
     db.create_all()
+    titles = [
+        "Exploring the Rocky Mountains",
+        "Trying new recipes in the kitchen",
+        "Learning to play guitar",
+        "Visiting museums in Paris",
+        "Welcome to GianBook"
+    ]
+    bod = [
+        "The mountains where cool nay epic.",
+        "the recipient where very recipie like",
+        "My hands hurt :(",
+        "I think i destroyed a 121 million painting...",
+        "Feel free to have fun"
+    ]
+    users = [
+        "Mountain",
+        "FoodEater",
+        "Future_Musician",
+        "Traveler",
+        "GianBook"
+    ]
+    for i in range(5):
+        title = titles[i]
+        text = bod[i]
+        user = users[i]
+        post = Post(title=title, text=text, user=user)
+        db.session.add(post)
+        db.session.commit()
 
 
 @app.route('/')
@@ -58,6 +88,14 @@ def account():
     if request.method == 'GET':
         username = session.get('username')
         password = session.get('password')
+        return render_template('account.html', username=username)
+    elif request.method == 'POST':
+        title = request.form['title']
+        body = request.form['body-text']
+        username = session.get('username')
+        post = Post(title=title, text=body)
+        db.session.add(post)
+        db.session.commit()
         return render_template('account.html', username=username)
 
 
