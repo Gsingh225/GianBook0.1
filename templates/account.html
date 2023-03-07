@@ -51,6 +51,12 @@
         body{
             text-align: center;
         }
+        .posty{
+            text-align: center;
+            border: solid #005cff 5px;
+            border-radius: 25px;
+            margin: 25px;
+        }
     </style>
 </head>
 <body>
@@ -72,14 +78,17 @@
                 <button type="submit" class="but">Post</button>
             </form>
         </div>
-        <h1 id="test"></h1>
     </div>
+    <h1>Welcome {{username}}</h1>
     <button class="but" id="postbut" onclick="yespost()">Post to GianBook</button>
+    <div class="posty">
+        <h3>{{title}}</h3>
+        <p>{{bodyText}}</p>
+    </div>
 </body>
 <script>
     var overlay = document.getElementById('overlay');
     var postbut = document.getElementById('postbut');
-    var test = document.getElementById('test')
      function yespost() {
         overlay.style.display = "block";
         postbut.style.visibility = "hidden";

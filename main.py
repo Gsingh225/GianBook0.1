@@ -11,6 +11,11 @@ class User(db.Model):
     username = db.Column(db.String(40), unique=True, nullable=False)
     password = db.Column(db.String(40), nullable=False)
 
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title  = db.Column(db.String(40), unique=True, nullable=False)
+    text = db.Column(db.String(400), unique=True, nullable=False)
+
 with app.app_context():
     db.drop_all()
     db.create_all()
@@ -48,11 +53,12 @@ def login():
             return render_template('login.html', err='Invalid Username or Password')
 
 
-@app.route('/account')
+@app.route('/account', methods=['GET', 'POST'])
 def account():
-    username = session.get('username')
-    password = session.get('password')
-    return f'LOGIN WAS A SUCCESS, Welcome {username}. Your password is {password}!'
+    if request.method == 'GET':
+        username = session.get('username')
+        password = session.get('password')
+        return render_template('account.html', username=username)
 
 
 if __name__ == '__main__':
