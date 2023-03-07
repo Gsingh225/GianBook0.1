@@ -75,16 +75,18 @@
                 <br><br>
                 <textarea rows="10" id="body-text" name="body-text" type="text" placeholder="body"></textarea>
                 <br><br>
-                <button type="submit" class="but">Post</button>
+                <button type="submit" class="but" onclick="okk()">Post</button>
             </form>
         </div>
     </div>
     <h1>Welcome {{username}}</h1>
     <button class="but" id="postbut" onclick="yespost()">Post to GianBook</button>
+    {% for post in posts %}
     <div class="posty">
-        <h3>{{title}}</h3>
-        <p>{{bodyText}}</p>
+        <h3>{{post.title}}</h3>
+        <p>{{post.text}}</p>
     </div>
+    {% endfor %}
 </body>
 <script>
     var overlay = document.getElementById('overlay');
@@ -96,5 +98,10 @@
     function closed() {
         overlay.style.display = "none";
         postbut.style.visibility = "visible";
+    }
+    function okk() {
+        overlay.style.display = "none";
+        postbut.style.visibility = "visible"
+        alert('Successfully Posted!');
     }
 </script>
