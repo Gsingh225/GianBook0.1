@@ -1,5 +1,7 @@
 from flask import Flask, session, request, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
+
 import random
 
 app = Flask(__name__)
@@ -88,14 +90,32 @@ def account():
     if request.method == 'GET':
         username = session.get('username')
         password = session.get('password')
-        return render_template('account.html', username=username)
+        postz = Post.query.order_by(func.random()).limit(5).all()
+        posts = []
+        for post in postz:
+            dic = {
+                "title": post.title,
+                "user": post.user,
+                "text": post.text
+            }
+            posts.append(dic)
+        return render_template('account.html', username=username, posts=posts)
     elif request.method == 'POST':
         title = request.form['title']
         body = request.form['body-text']
         username = session.get('username')
-        post = Post(title=title, text=body)
+        post = Post(title=title, text=body, user=username)
         db.session.add(post)
         db.session.commit()
+        postz = Post.query.order_by(func.random()).limit(5).all()
+        posts = [{"title": title, "user": username, "text": body}]
+        for post in postz:
+            dic = {
+                "title": post.title,
+                "user": post.user,
+                "text": post.text
+            }
+            posts.append(dic)
         return render_template('account.html', username=username)
 
 
