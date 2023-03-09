@@ -67,7 +67,8 @@ def register():
         user = User(username=username, password=password)
         db.session.add(user)
         db.session.commit()
-        return f'Your username is "{username}", and password is "{password}. Account created successfully. Please return to the homepage to login!"'
+        return redirect(url_for('login'))
+        return f'<h2>Your username is "{username}", and password is "{password}. Account created successfully. Please return to the homepage to login!</h1>'
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -116,7 +117,7 @@ def account():
                 "text": post.text
             }
             posts.append(dic)
-        return render_template('account.html', username=username)
+        return render_template('account.html', username=username, posts=posts)
 
 
 if __name__ == '__main__':
