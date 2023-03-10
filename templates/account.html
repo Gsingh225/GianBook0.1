@@ -57,6 +57,13 @@
             border-radius: 25px;
             margin: 25px;
         }
+        a {
+            text-decoration: none;
+            background-color: #005cff;
+            color: white;
+            border-radius: 20px;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -80,6 +87,7 @@
         </div>
     </div>
     <h1>Welcome {{username}}</h1>
+    <a href="{{url_for('index')}}">Logout</a>
     <button class="but" id="postbut" onclick="yespost()">Post to GianBook</button>
     {% for post in posts %}
     <div class="posty">
